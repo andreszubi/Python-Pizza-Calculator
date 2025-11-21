@@ -7,6 +7,19 @@ An interactive and fun pizza ordering calculator built with Python! Available in
 
 Calculate your pizza order total with multiple toppings, automatic combo deal detection, and detailed receipts!
 
+## 🌐 Live Demo
+
+**Try it now!** Experience the retro-themed web interface with 3D depth effects:
+
+🔗 **[Live Demo - https://python-pizza-calculator-andreszubi.replit.app/](https://python-pizza-calculator-andreszubi.replit.app/)**
+
+The live demo showcases the Flask web application with:
+- 🎮 Retro 80s/90s aesthetic with neon colors
+- 🎨 3D depth effects and modern UI enhancements
+- 🖱️ Clickable combo deals for auto-selecting toppings
+- 📱 Responsive design
+- ⚡ Real-time order calculation
+
 ## Features
 
 ### 🎯 Core Functionality
@@ -86,7 +99,10 @@ python Pizza-Calculator.py
 ```
 
 #### Option 2: Flask Web App (Retro Theme) 🎮
-Run the Flask application:
+
+**🌐 [Try the Live Demo](https://python-pizza-calculator-andreszubi.replit.app/)** - No installation required!
+
+Or run locally:
 ```bash
 python3 app.py
 # Or use the convenience script:
@@ -192,13 +208,23 @@ DONE
 
 ## 🎨 Retro Web Interface Features
 
-The Flask and Django web versions feature a **retro 80s/90s themed interface** with:
-- 🖥️ **CRT Monitor Effect** - Authentic scanlines and flicker
+The Flask and Django web versions feature a **retro 80s/90s themed interface with modern 3D depth** including:
+
+### Visual Effects
+- 🖥️ **CRT Monitor Effect** - Authentic scanlines, flicker, and bezel depth
 - 🌈 **Neon Colors** - Cyan, magenta, yellow, and green glow effects
 - ⚡ **Glitch Animations** - Retro text glitch effects
 - 🎯 **Pixel Art Aesthetics** - Press Start 2P and Orbitron fonts
-- ✨ **Interactive Elements** - Hover effects and button animations
 - 📄 **Retro Receipts** - Styled like classic 80s point-of-sale receipts
+
+### Modern 3D Enhancements
+- 🎭 **3D Depth Effects** - Elements lift and tilt with `translateZ`, `rotateX`, and `rotateY` transforms
+- 💫 **Layered Shadows** - Multiple box-shadow layers for realistic depth
+- 🎪 **Interactive Hover Effects** - Elements lift in 3D space on hover
+- ✨ **Smooth Animations** - Cubic-bezier transitions and floating effects
+- 🔮 **Modern CSS Features** - backdrop-filter, preserve-3d, and perspective
+- 🎨 **Gradient Backgrounds** - Depth-enhanced gradients throughout
+- 🖱️ **Clickable Combo Deals** - Auto-select toppings with visual feedback
 
 ## 🛠️ Technical Details
 
