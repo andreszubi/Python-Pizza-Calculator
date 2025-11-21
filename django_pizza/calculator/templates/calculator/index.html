@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍕 RETRO PIZZA CALCULATOR 🍕</title>
+    <link rel="stylesheet" href="{% static 'calculator/css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="crt-screen">
+        <div class="scanlines"></div>
+        <div class="content">
+            <!-- Retro Header -->
+            <div class="header-container">
+                <h1 class="retro-title glitch" data-text="🍕 RETRO PIZZA 🍕">🍕 RETRO PIZZA 🍕</h1>
+                <h2 class="retro-subtitle">CALCULATOR 1985</h2>
+                <div class="neon-line"></div>
+            </div>
+
+            <!-- Main Form -->
+            <form method="POST" action="{% url 'calculate' %}" class="retro-form">
+                {% csrf_token %}
+                <!-- Pizza Size Selection -->
+                <div class="form-section">
+                    <h3 class="section-title">SELECT PIZZA SIZE</h3>
+                    <div class="size-selector">
+                        {% for size_key, price in size_prices.items %}
+                        <label class="retro-radio">
+                            <input type="radio" name="size" value="{{ size_key }}" required 
+                                   {% if forloop.first %}checked{% endif %}>
+                            <span class="radio-custom"></span>
+                            <span class="radio-label">
+                                <span class="size-letter">{{ size_key }}</span>
+                                <span class="size-price">${{ price }}</span>
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Toppings Selection -->
+                <div class="form-section">
+                    <h3 class="section-title">CHOOSE YOUR TOPPINGS</h3>
+                    <div class="toppings-grid">
+                        {% for key, topping in toppings.items %}
+                        <label class="retro-checkbox">
+                            <input type="checkbox" name="toppings" value="{{ key }}">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-label">
+                                <span class="topping-name">{{ topping.name }}</span>
+                                <span class="topping-price">${{ topping.price.M }}</span>
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Combo Deals Info -->
+                <div class="form-section">
+                    <h3 class="section-title">SPECIAL COMBO DEALS</h3>
+                    <div class="combo-info">
+                        {% for combo_key, combo in combo_deals.items %}
+                        <div class="combo-card">
+                            <div class="combo-name">{{ combo.name }}</div>
+                            <div class="combo-discount">{{ combo.discount_percent }}% OFF</div>
+                            <div class="combo-toppings">{{ combo.toppings|join:", " }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="retro-button">
+                    <span class="button-text">CALCULATE ORDER</span>
+                    <span class="button-glow"></span>
+                </button>
+            </form>
+
+            <!-- Retro Footer -->
+            <div class="footer">
+                <div class="pixel-art">🍕</div>
+                <p class="footer-text">RETRO PIZZA DELIVERIES SINCE 1985</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add retro sound effects and interactions
+        document.querySelectorAll('.retro-button, .retro-radio, .retro-checkbox').forEach(element => {
+            element.addEventListener('click', function() {
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // Glitch effect
+        const glitch = document.querySelector('.glitch');
+        if (glitch) {
+            setInterval(() => {
+                glitch.style.animation = 'none';
+                setTimeout(() => {
+                    glitch.style.animation = 'glitch 0.3s';
+                }, 10);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+/* Retro Pizza Calculator - 1985 Theme */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: #0a0a0a;
+    color: #00ff41;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* CRT Monitor Effect */
+.crt-screen {
+    position: relative;
+    min-height: 100vh;
+    background: 
+        radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 100%),
+        repeating-linear-gradient(
+            0deg,
+            rgba(0, 255, 65, 0.03) 0px,
+            rgba(0, 255, 65, 0.03) 1px,
+            transparent 1px,
+            transparent 2px
+        );
+    padding: 20px;
+    animation: flicker 0.15s infinite;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+    animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.98; }
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Retro Header */
+.header-container {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px 0;
+    position: relative;
+}
+
+.retro-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.5rem;
+    color: #00ffff;
+    text-shadow: 
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 30px #00ffff,
+        3px 3px 0px #ff00ff;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.receipt-title {
+    font-size: 2rem;
+    color: #ffff00;
+    text-shadow: 
+        0 0 10px #ffff00,
+        0 0 20px #ffff00,
+        3px 3px 0px #ff00ff;
+}
+
+.retro-subtitle {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+    letter-spacing: 5px;
+    font-weight: 700;
+}
+
+.neon-line {
+    height: 4px;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        #00ffff 20%,
+        #ff00ff 50%,
+        #00ffff 80%,
+        transparent 100%
+    );
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 0 20px #00ffff;
+    animation: neonFlow 3s ease-in-out infinite;
+}
+
+@keyframes neonFlow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00ff;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00ffff, 2px 2px #ff00ff;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 1s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(31px, 9999px, 94px, 0); }
+    20% { clip: rect(54px, 9999px, 29px, 0); }
+    40% { clip: rect(28px, 9999px, 85px, 0); }
+    60% { clip: rect(2px, 9999px, 4px, 0); }
+    80% { clip: rect(76px, 9999px, 98px, 0); }
+    100% { clip: rect(23px, 9999px, 89px, 0); }
+}
+
+/* Form Sections */
+.retro-form {
+    background: rgba(0, 0, 0, 0.7);
+    border: 3px solid #00ffff;
+    box-shadow: 
+        0 0 20px #00ffff,
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form-section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: #ffff00;
+    text-shadow: 0 0 10px #ffff00;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+/* Size Selector */
+.size-selector {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.retro-radio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px 25px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 2px solid #00ffff;
+    transition: all 0.3s;
+    position: relative;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+}
+
+.retro-radio input[type="radio"] {
+    display: none;
+}
+
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #00ffff;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    box-shadow: 0 0 10px #00ffff;
+}
+
+.retro-radio input[type="radio"]:checked + .radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: #00ffff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #00ffff;
+}
+
+.retro-radio input[type="radio"]:checked ~ .radio-label {
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+}
+
+.retro-radio:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 20px #00ffff;
+    transform: translateY(-2px);
+}
+
+.radio-label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.size-letter {
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.size-price {
+    font-size: 0.9rem;
+    color: #ffff00;
+}
+
+/* Toppings Grid */
+.toppings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.retro-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 15px;
+    background: rgba(255, 0, 255, 0.05);
+    border: 2px solid #ff00ff;
+    transition: all 0.3s;
+    font-family: 'Orbitron', monospace;
+}
+
+.retro-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ff00ff;
+    margin-right: 12px;
+    position: relative;
+    box-shadow: 0 0 8px #ff00ff;
+    background: transparent;
+}
+
+.retro-checkbox input[type="checkbox"]:checked + .checkbox-custom {
+    background: #ff00ff;
+    box-shadow: 0 0 15px #ff00ff;
+}
+
+.retro-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.retro-checkbox input[type="checkbox"]:checked ~ .checkbox-label {
+    color: #ff00ff;
+    text-shadow: 0 0 8px #ff00ff;
+}
+
+.retro-checkbox:hover {
+    background: rgba(255, 0, 255, 0.15);
+    box-shadow: 0 0 15px #ff00ff;
+    transform: translateX(5px);
+}
+
+.checkbox-label {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.topping-name {
+    font-weight: 600;
+}
+
+.topping-price {
+    color: #ffff00;
+    font-weight: 700;
+}
+
+/* Combo Info */
+.combo-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.combo-card {
+    background: rgba(255, 255, 0, 0.1);
+    border: 2px solid #ffff00;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.3);
+    transition: all 0.3s;
+}
+
+.combo-card:hover {
+    box-shadow: 0 0 25px #ffff00;
+    transform: scale(1.05);
+}
+
+.combo-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    color: #ffff00;
+    margin-bottom: 8px;
+    text-shadow: 0 0 8px #ffff00;
+}
+
+.combo-discount {
+    font-weight: 900;
+    color: #00ff41;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px #00ff41;
+}
+
+.combo-toppings {
+    font-size: 0.75rem;
+    color: #00ffff;
+    line-height: 1.4;
+}
+
+/* Retro Button */
+.retro-button {
+    position: relative;
+    padding: 20px 50px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: #000;
+    background: linear-gradient(135deg, #00ffff 0%, #ff00ff 100%);
+    border: 3px solid #ffff00;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    overflow: hidden;
+    transition: all 0.3s;
+    display: block;
+    margin: 30px auto;
+    text-decoration: none;
+    box-shadow: 
+        0 0 20px #00ffff,
+        0 0 40px #ff00ff,
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.retro-button:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 0 30px #00ffff,
+        0 0 60px #ff00ff,
+        inset 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+.retro-button:active {
+    transform: scale(0.98);
+}
+
+.button-text {
+    position: relative;
+    z-index: 2;
+}
+
+.button-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.retro-button:hover .button-glow {
+    width: 300px;
+    height: 300px;
+}
+
+/* Receipt */
+.receipt-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.receipt-paper {
+    background: #0a0a0a;
+    border: 3px solid #00ff41;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 
+        0 0 30px #00ff41,
+        inset 0 0 30px rgba(0, 255, 65, 0.1);
+    position: relative;
+    font-family: 'Orbitron', monospace;
+}
+
+@keyframes printReceipt {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.receipt-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.receipt-logo {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff41;
+    margin-bottom: 5px;
+}
+
+.receipt-date {
+    color: #00ffff;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.receipt-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff41, transparent);
+    margin: 15px 0;
+    box-shadow: 0 0 10px #00ff41;
+}
+
+.receipt-line-bold {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ffff00, transparent);
+    box-shadow: 0 0 15px #ffff00;
+}
+
+.receipt-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.9rem;
+}
+
+.receipt-label {
+    color: #00ffff;
+}
+
+.receipt-value {
+    color: #ffff00;
+    font-weight: 700;
+    text-shadow: 0 0 8px #ffff00;
+}
+
+.receipt-topping {
+    padding-left: 20px;
+    font-size: 0.85rem;
+}
+
+.receipt-subtitle {
+    color: #ff00ff;
+    font-weight: 700;
+    margin: 15px 0 10px 0;
+    text-shadow: 0 0 8px #ff00ff;
+}
+
+.receipt-subtotal {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 255, 65, 0.3);
+}
+
+.receipt-total {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-top: 15px;
+    padding: 15px 0;
+}
+
+.total-amount {
+    font-size: 1.5rem;
+    color: #00ff41;
+    text-shadow: 0 0 15px #00ff41;
+}
+
+.combo-alert {
+    background: rgba(255, 255, 0, 0.1);
+    border: 2px solid #ffff00;
+    padding: 15px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 0 20px #ffff00;
+}
+
+@keyframes celebrate {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.combo-badge {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    color: #ffff00;
+    text-shadow: 0 0 10px #ffff00;
+    margin-bottom: 8px;
+}
+
+.combo-name {
+    font-weight: 900;
+    color: #00ffff;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px #00ffff;
+}
+
+.combo-discount {
+    color: #00ff41;
+    font-weight: 700;
+    font-size: 1rem;
+    text-shadow: 0 0 8px #00ff41;
+}
+
+.savings-message {
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    color: #00ff41;
+    text-shadow: 0 0 15px #00ff41;
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(0, 255, 65, 0.1);
+    border: 2px solid #00ff41;
+}
+
+.receipt-footer {
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    color: #ff00ff;
+    text-shadow: 0 0 8px #ff00ff;
+    margin-top: 20px;
+    padding-top: 15px;
+}
+
+.action-buttons {
+    text-align: center;
+    margin: 30px 0;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+.pixel-art {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.footer-text {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+    letter-spacing: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .retro-title {
+        font-size: 1.5rem;
+    }
+    
+    .retro-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .size-selector {
+        flex-direction: column;
+    }
+    
+    .toppings-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .combo-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .retro-form {
+        padding: 20px;
+    }
+    
+    .section-title {
+        font-size: 0.7rem;
+    }
+}

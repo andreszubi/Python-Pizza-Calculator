@@ -1,6 +1,11 @@
 # 🍕 Python Pizza Calculator
 
-An interactive and fun command-line pizza ordering calculator built with Python. Calculate your pizza order total with multiple toppings, automatic combo deal detection, and detailed receipts!
+An interactive and fun pizza ordering calculator built with Python! Available in three versions:
+- **Command-line interface** - Original terminal-based calculator
+- **Flask Web App** - Retro-themed web interface with 80s/90s aesthetics
+- **Django Web App** - Full-featured retro web application
+
+Calculate your pizza order total with multiple toppings, automatic combo deal detection, and detailed receipts!
 
 ## Features
 
@@ -49,6 +54,7 @@ The calculator automatically detects and applies discounts when you order these 
 
 ### Prerequisites
 - Python 3.x installed on your system
+- pip (Python package manager)
 
 ### Installation
 1. Clone or download this repository
@@ -56,8 +62,19 @@ The calculator automatically detects and applies discounts when you order these 
    ```bash
    cd Python-Pizza-Calculator
    ```
+3. (Optional) Create a virtual environment:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+4. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Running the Program
+### Running the Programs
+
+#### Option 1: Command-Line Interface (Original)
 Simply run the Python script:
 ```bash
 python3 Pizza-Calculator.py
@@ -66,6 +83,39 @@ python3 Pizza-Calculator.py
 Or on Windows:
 ```bash
 python Pizza-Calculator.py
+```
+
+#### Option 2: Flask Web App (Retro Theme) 🎮
+Run the Flask application:
+```bash
+python3 app.py
+# Or use the convenience script:
+./run_flask.sh
+```
+
+Then open your browser and navigate to:
+```
+http://localhost:5000
+```
+
+#### Option 3: Django Web App (Retro Theme) 🎮
+Navigate to the Django directory and run:
+```bash
+cd django_pizza
+python3 manage.py runserver
+# Or use the convenience script from the root:
+../run_django.sh
+```
+
+Then open your browser and navigate to:
+```
+http://localhost:8000
+```
+
+**Note:** For Django, you may need to run migrations first (though no database is required for this app):
+```bash
+cd django_pizza
+python3 manage.py migrate
 ```
 
 ## 📖 How to Use
@@ -140,22 +190,47 @@ DONE
 - Applies the best available discount if multiple combos qualify
 - Clearly displays savings on the receipt
 
+## 🎨 Retro Web Interface Features
+
+The Flask and Django web versions feature a **retro 80s/90s themed interface** with:
+- 🖥️ **CRT Monitor Effect** - Authentic scanlines and flicker
+- 🌈 **Neon Colors** - Cyan, magenta, yellow, and green glow effects
+- ⚡ **Glitch Animations** - Retro text glitch effects
+- 🎯 **Pixel Art Aesthetics** - Press Start 2P and Orbitron fonts
+- ✨ **Interactive Elements** - Hover effects and button animations
+- 📄 **Retro Receipts** - Styled like classic 80s point-of-sale receipts
+
 ## 🛠️ Technical Details
 
 ### Project Structure
 ```
 Python-Pizza-Calculator/
-├── Pizza-Calculator.py    # Main application file
-└── README.md              # This file
+├── Pizza-Calculator.py    # Original command-line application
+├── app.py                 # Flask web application
+├── templates/             # Flask HTML templates
+│   ├── index.html        # Main ordering page
+│   └── receipt.html      # Order receipt page
+├── static/                # Flask static files (CSS)
+│   └── style.css         # Retro-themed styling
+├── django_pizza/          # Django web application
+│   ├── manage.py         # Django management script
+│   ├── pizza_project/    # Django project settings
+│   └── calculator/       # Django app
+│       ├── views.py      # View logic
+│       ├── templates/    # HTML templates
+│       └── static/       # CSS files
+├── requirements.txt      # Python dependencies
+└── README.md             # This file
 ```
 
 ### Key Functions
-- `get_pizza_size()`: Validates and retrieves pizza size selection
-- `display_toppings_menu()`: Shows available toppings with prices
-- `get_toppings()`: Handles multiple topping selection
+- `get_pizza_size()`: Validates and retrieves pizza size selection (CLI)
+- `display_toppings_menu()`: Shows available toppings with prices (CLI)
+- `get_toppings()`: Handles multiple topping selection (CLI)
 - `calculate_combo_discount()`: Detects applicable combo deals
 - `calculate_bill()`: Computes total with base price, toppings, and discounts
-- `display_receipt()`: Formats and displays order summary
+- `display_receipt()`: Formats and displays order summary (CLI)
+- Flask/Django views: Handle web requests and render retro-themed templates
 
 ## 🤝 Contributing
 

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍕 ORDER RECEIPT 🍕</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="crt-screen">
+        <div class="scanlines"></div>
+        <div class="content">
+            <!-- Retro Header -->
+            <div class="header-container">
+                <h1 class="retro-title receipt-title">ORDER RECEIPT</h1>
+                <div class="neon-line"></div>
+            </div>
+
+            <!-- Receipt Content -->
+            <div class="receipt-container">
+                <div class="receipt-paper">
+                    <div class="receipt-header">
+                        <div class="receipt-logo">🍕 RETRO PIZZA 🍕</div>
+                        <div class="receipt-date">1985</div>
+                    </div>
+
+                    <div class="receipt-line"></div>
+
+                    <!-- Pizza Size -->
+                    <div class="receipt-item">
+                        <div class="receipt-label">{{ size_name }} PIZZA</div>
+                        <div class="receipt-value">${{ base_price_fmt }}</div>
+                    </div>
+
+                    <!-- Toppings -->
+                    {% if topping_costs %}
+                    <div class="receipt-section">
+                        <div class="receipt-subtitle">TOPPINGS:</div>
+                        {% for topping_name, cost in topping_costs %}
+                        <div class="receipt-item receipt-topping">
+                            <div class="receipt-label">• {{ topping_name }}</div>
+                            <div class="receipt-value">${{ cost }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="receipt-item">
+                        <div class="receipt-label">NO TOPPINGS</div>
+                    </div>
+                    {% endif %}
+
+                    <div class="receipt-line"></div>
+
+                    <!-- Subtotal -->
+                    <div class="receipt-item receipt-subtotal">
+                        <div class="receipt-label">SUBTOTAL</div>
+                        <div class="receipt-value">${{ subtotal_fmt }}</div>
+                    </div>
+
+                    <!-- Combo Deal -->
+                    {% if combo %}
+                    <div class="combo-alert">
+                        <div class="combo-badge">🎉 SPECIAL DEAL! 🎉</div>
+                        <div class="combo-name">{{ combo.name }}</div>
+                        <div class="combo-discount">- ${{ discount_fmt }} ({{ combo.discount_percent }}% OFF)</div>
+                    </div>
+                    {% endif %}
+
+                    <div class="receipt-line receipt-line-bold"></div>
+
+                    <!-- Total -->
+                    <div class="receipt-item receipt-total">
+                        <div class="receipt-label">TOTAL</div>
+                        <div class="receipt-value total-amount">${{ total_fmt }}</div>
+                    </div>
+
+                    {% if combo %}
+                    <div class="savings-message">
+                        💰 YOU SAVED ${{ discount_fmt }}! 💰
+                    </div>
+                    {% endif %}
+
+                    <div class="receipt-line"></div>
+                    <div class="receipt-footer">
+                        THANK YOU FOR YOUR ORDER!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="{{ url_for('index') }}" class="retro-button">
+                    <span class="button-text">ORDER AGAIN</span>
+                    <span class="button-glow"></span>
+                </a>
+            </div>
+
+            <!-- Retro Footer -->
+            <div class="footer">
+                <div class="pixel-art">🍕</div>
+                <p class="footer-text">RETRO PIZZA DELIVERIES SINCE 1985</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate receipt printing
+        const receipt = document.querySelector('.receipt-paper');
+        receipt.style.animation = 'printReceipt 0.8s ease-out';
+        
+        // Add celebration effect for combo deals
+        {% if combo %}
+        setTimeout(() => {
+            document.querySelector('.combo-alert').style.animation = 'celebrate 0.5s ease-out';
+        }, 500);
+        {% endif %}
+    </script>
+</body>
+</html>
