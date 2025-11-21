@@ -33,6 +33,10 @@ outputType = "webview"
 localPort = 5000
 externalPort = 80
 
+[[ports]]
+localPort = 34291
+externalPort = 3000
+
 [deployment]
 deploymentTarget = "cloudrun"
 run = ["sh", "-c", "/nix/store/cn7gx98bvd6qj3jrh5v21q868nlv2jv6-python3-wrapper/bin/python3 $file"]
