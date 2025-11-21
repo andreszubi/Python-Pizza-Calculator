@@ -62,9 +62,14 @@
                 <!-- Combo Deals Info -->
                 <div class="form-section">
                     <h3 class="section-title">SPECIAL COMBO DEALS</h3>
+                    <p class="combo-hint">Click a combo to auto-select toppings!</p>
                     <div class="combo-info">
                         {% for combo_key, combo in combo_deals.items %}
-                        <div class="combo-card">
+                        <div class="combo-card" 
+                             data-combo-key="{{ combo_key }}"
+                             data-topping-ids="{{ combo.topping_ids|join:',' }}"
+                             role="button"
+                             tabindex="0">
                             <div class="combo-name">{{ combo.name }}</div>
                             <div class="combo-discount">{{ combo.discount_percent }}% OFF</div>
                             <div class="combo-toppings">{{ combo.toppings|join:", " }}</div>
@@ -89,6 +94,9 @@
     </div>
 
     <script>
+        // Track currently selected combo
+        let selectedCombo = null;
+
         // Add retro sound effects and interactions
         document.querySelectorAll('.retro-button, .retro-radio, .retro-checkbox').forEach(element => {
             element.addEventListener('click', function() {
@@ -99,6 +107,94 @@
                 }, 100);
             });
         });
+
+        // Combo card click handler
+        document.querySelectorAll('.combo-card').forEach(card => {
+            card.addEventListener('click', function() {
+                handleComboClick(this);
+            });
+            
+            // Also handle keyboard (Enter/Space)
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleComboClick(this);
+                }
+            });
+        });
+
+        function handleComboClick(card) {
+            const comboKey = card.getAttribute('data-combo-key');
+            const toppingIds = card.getAttribute('data-topping-ids').split(',').filter(id => id);
+            
+            // Check if this combo is already selected
+            const isCurrentlySelected = card.classList.contains('combo-selected');
+            
+            // Remove selection from all combo cards
+            document.querySelectorAll('.combo-card').forEach(c => {
+                c.classList.remove('combo-selected');
+            });
+            
+            if (!isCurrentlySelected) {
+                // Select this combo
+                card.classList.add('combo-selected');
+                selectedCombo = comboKey;
+                
+                // Unselect all toppings first
+                document.querySelectorAll('input[name="toppings"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                // Select toppings for this combo
+                toppingIds.forEach(toppingId => {
+                    const checkbox = document.querySelector(`input[name="toppings"][value="${toppingId}"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+                
+                // Add visual feedback
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 150);
+            } else {
+                // Deselecting - unselect all toppings for this combo
+                toppingIds.forEach(toppingId => {
+                    const checkbox = document.querySelector(`input[name="toppings"][value="${toppingId}"]`);
+                    if (checkbox) {
+                        checkbox.checked = false;
+                    }
+                });
+                selectedCombo = null;
+            }
+        }
+
+        // Handle individual topping checkbox changes to update combo selection
+        document.querySelectorAll('input[name="toppings"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Check if all toppings of a combo are selected
+                updateComboSelection();
+            });
+        });
+
+        function updateComboSelection() {
+            document.querySelectorAll('.combo-card').forEach(card => {
+                const toppingIds = card.getAttribute('data-topping-ids').split(',').filter(id => id);
+                const allSelected = toppingIds.every(id => {
+                    const checkbox = document.querySelector(`input[name="toppings"][value="${id}"]`);
+                    return checkbox && checkbox.checked;
+                });
+                
+                // Only mark as selected if ALL toppings are selected
+                if (allSelected && toppingIds.length > 0) {
+                    card.classList.add('combo-selected');
+                } else {
+                    // Remove selection if not all toppings are selected
+                    card.classList.remove('combo-selected');
+                }
+            });
+        }
 
         // Glitch effect
         const glitch = document.querySelector('.glitch');

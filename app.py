@@ -92,12 +92,21 @@ def calculate_bill(size, selected_toppings):
 @app.route('/')
 def index():
     """Main page with pizza ordering form"""
-    # Calculate discount percentage for template
+    # Calculate discount percentage for template and add topping IDs
     combo_deals_with_percent = {}
     for key, combo in COMBO_DEALS.items():
+        # Map topping names to their IDs for JavaScript
+        topping_ids = []
+        for topping_name in combo['toppings']:
+            for topping_id, topping_info in TOPPINGS.items():
+                if topping_info['name'] == topping_name:
+                    topping_ids.append(topping_id)
+                    break
+        
         combo_deals_with_percent[key] = {
             **combo,
-            'discount_percent': int(combo['discount'] * 100)
+            'discount_percent': int(combo['discount'] * 100),
+            'topping_ids': topping_ids
         }
     
     return render_template('index.html', 

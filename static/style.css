@@ -354,6 +354,16 @@ body {
 }
 
 /* Combo Info */
+.combo-hint {
+    text-align: center;
+    color: #00ffff;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 8px #00ffff;
+    font-weight: 600;
+    font-style: italic;
+}
+
 .combo-info {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -367,11 +377,71 @@ body {
     text-align: center;
     box-shadow: 0 0 15px rgba(255, 255, 0, 0.3);
     transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
 }
 
 .combo-card:hover {
     box-shadow: 0 0 25px #ffff00;
     transform: scale(1.05);
+    background: rgba(255, 255, 0, 0.15);
+}
+
+.combo-card:active {
+    transform: scale(0.98);
+}
+
+.combo-card:focus {
+    outline: 2px solid #00ffff;
+    outline-offset: 2px;
+}
+
+.combo-card.combo-selected {
+    background: rgba(255, 255, 0, 0.25);
+    border: 3px solid #00ff41;
+    box-shadow: 
+        0 0 30px #00ff41,
+        0 0 15px #ffff00,
+        inset 0 0 20px rgba(0, 255, 65, 0.2);
+    animation: comboPulse 2s ease-in-out infinite;
+}
+
+.combo-card.combo-selected .combo-name {
+    color: #00ff41;
+    text-shadow: 0 0 15px #00ff41;
+}
+
+.combo-card.combo-selected .combo-discount {
+    color: #ffff00;
+    text-shadow: 0 0 15px #ffff00;
+    animation: discountGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes comboPulse {
+    0%, 100% { 
+        box-shadow: 
+            0 0 30px #00ff41,
+            0 0 15px #ffff00,
+            inset 0 0 20px rgba(0, 255, 65, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 0 40px #00ff41,
+            0 0 25px #ffff00,
+            inset 0 0 30px rgba(0, 255, 65, 0.3);
+    }
+}
+
+@keyframes discountGlow {
+    0%, 100% { 
+        text-shadow: 0 0 15px #ffff00;
+        transform: scale(1);
+    }
+    50% { 
+        text-shadow: 0 0 25px #ffff00, 0 0 35px #ffff00;
+        transform: scale(1.05);
+    }
 }
 
 .combo-name {
